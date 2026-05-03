@@ -1,23 +1,20 @@
 import { Routes } from '@angular/router';
 import { Home } from './pages/home/home';
-import { Agencias } from './pages/agencias/agencias';
-import { Destinos } from './pages/destinos/destinos';
-import { Blog } from './pages/blog/blog';
-import { Contacto } from './pages/contacto/contacto';
-import { Error404 } from './pages/error404/error404';
+import { Punto1 } from './pages/punto1/punto1'
+import { Punto2 } from './pages/punto2/punto2'
+import { Punto3 } from './pages/punto3/punto3'
 
 export const routes: Routes = [
 // Manda al home si la ruta esta vacia
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+//{ path: '', redirectTo: 'home', pathMatch: 'full' },
   
   // Definimos los caminos
   { path: 'home', component: Home },
-  { path: 'agencias', component: Agencias },
-  { path: 'destinos', component: Destinos },
-  { path: 'blog', component: Blog },
-  { path: 'contacto', component: Contacto },
+  { path: 'punto1', component: Punto1},
+  { path: 'punto2', component: Punto2},
+  { path: 'punto3', component: Punto3},
 
   // Manda al home si la ruta no existe
-  { path: '**', redirectTo: 'error404' }
+  // { path: '**', redirectTo: 'error404' }
 
 ];
