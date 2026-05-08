@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+ import { Component } from '@angular/core'
 
-@Component({
+ @Component({
   selector: 'app-punto2',
-  imports: [],
   templateUrl: './punto2.html',
-  styleUrl: './punto2.css',
-})
-export class Punto2 {}
+  styleUrl: './punto2.css'})
+  export class Punto2{
+    title= "punto 2 hola mundo";
+  }

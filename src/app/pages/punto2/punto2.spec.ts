@@ -1,4 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+ import {TestBed, ComponentFixture} from '@angular/core/testing';
+ 
+// describe ('punto2Component', () =>{
+
+// })import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Punto2 } from './punto2';
 

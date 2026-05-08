@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-
-@Component({
+ @Component({
   selector: 'app-home',
   imports: [],
   templateUrl: './home.html',

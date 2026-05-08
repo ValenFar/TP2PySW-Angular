@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-punto1',
-  imports: [],
   templateUrl: './punto1.html',
-  styleUrl: './punto1.css',
+  styleUrl:'./punto1.css',
 })
-export class Punto1 {}
+export class Punto1{}
