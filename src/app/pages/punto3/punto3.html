@@ -1,1 +1,53 @@
-<p>punto3 works!</p>
+<div class="container my-5 text-center">
+  <h2 class="fw-bold mb-4">Juego de la Memoria</h2>
+
+  <div class="d-flex justify-content-center align-items-center gap-4 mb-4">
+    <h4 class="m-0 text-primary">Intentos Restantes: <strong>{{ intentosRestantes }}</strong></h4>
+    
+    @if (!juegoIniciado) {
+      <button class="btn btn-success" (click)="iniciarJuego()">INICIAR</button>
+    }
+    
+    @if (juegoIniciado) {
+      <button class="btn btn-danger" (click)="reiniciarJuego()">REINICIAR</button>
+      
+      <button class="btn btn-warning fw-bold" 
+        [disabled]="cartasSeleccionadas.length !== 2" 
+        (click)="intentarMatch()">
+        INTENTAR
+      </button>
+    }
+  </div>
+
+  @if (intentosRestantes === 0) {
+    <div class="alert alert-danger fw-bold">
+      ¡Juego Terminado! Te quedaste sin intentos.
+    </div>
+  }
+
+  @if (juegoIniciado && intentosRestantes > 0) {
+    <div class="row g-3 justify-content-center">
+      
+      @for (carta of tablero; track carta.id) {
+        <div class="col-4 col-md-3 col-lg-2">
+          
+          <div class="carta-memoria-container" (click)="seleccionarCarta(carta)">
+            
+            <div class="carta-memoria-inner" [class.volteada]="carta.descubierta || carta.emparejada">
+              
+              <div class="carta-memoria-cara carta-reverso">
+                <img [src]="imagenOculta" alt="Reverso">
+              </div>
+              
+              <div class="carta-memoria-cara carta-frente">
+                <img [src]="carta.imagen" alt="Carta">
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      }
+      
+    </div>
+  }
