@@ -1,1 +1,225 @@
-<p>punto3 works!</p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>seccion 2</title>
+    <link rel="stylesheet" href="punto3.css">
+</head>
+<body>
+    
+</body>
+</html>
+<div class="container mt-5 mb-5">
+
+    <div class="card shadow p-4">
+
+        <h2 class="text-center mb-4">
+            Inscripción a Cursos
+        </h2>
+
+        <!-- DNI -->
+        <div class="mb-3">
+            <label>DNI</label>
+
+            <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="inscripcion.dni"
+            name="dni"
+            required>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="mb-3">
+            <label>Email</label>
+            <input
+            type="email"
+            class="form-control"
+            [(ngModel)]="inscripcion.email"
+            name="email"
+            required>
+        </div>
+
+        <!-- CURSO -->
+        <div class="mb-3">
+            <label>Curso</label>
+
+            <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="inscripcion.curso"
+            name="curso"
+            required>
+        </div>
+
+        <!-- FECHA -->
+        <div class="mb-3">
+            <label>Fecha de inscripción</label>
+            type="date"
+            class="form-control"
+            [(ngModel)]="inscripcion.fechaInscripcion"
+            name="fechaInscripcion">
+        </div>
+
+        <!-- PRECIO -->
+        <div class="mb-3">
+            <label>Precio</label>
+
+            <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="inscripcion.precio"
+            name="precio"
+            (change)="calcularTotal()"
+            required>
+        </div>
+
+        <!-- CATEGORIA -->
+        <div class="mb-3">
+
+            <label>Categoría Alumno</label>
+
+            <select
+            class="form-select"
+            [(ngModel)]="inscripcion.categoriaAlumno"
+            name="categoriaAlumno"
+            (change)="calcularTotal()">
+
+                <option value="">
+                    Seleccione
+                </option>
+
+                <option value="1">
+                    Estudiante
+                </option>
+
+                <option value="2">
+                    Egresado
+                </option>
+
+                <option value="3">
+                    Particular
+                </option>
+
+            </select>
+
+        </div>
+
+        <!-- TOTAL -->
+        <div
+        class="alert alert-success"
+        *ngIf="inscripcion.precio > 0 && inscripcion.categoriaAlumno">
+
+            <h4>
+                Total a pagar:
+                {{ totalFinal | currency }}
+            </h4>
+
+        </div>
+
+        <!-- BOTON -->
+        <button
+        class="btn btn-primary w-100"
+        (click)="registrar()">
+            Registrar
+        </button>
+
+    </div>
+
+
+    <!-- TABLA -->
+    <div class="card mt-5 shadow p-4">
+
+        <h3 class="mb-4">
+            Lista de Inscripciones
+        </h3>
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>DNI</th>
+                        <th>Email</th>
+                        <th>Curso</th>
+                        <th>Fecha</th>
+                        <th>Categoría</th>
+                        <th>Total</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr *ngFor="let item of obtenerInscripciones(); let i = index">
+
+                        <td>{{ item.dni }}</td>
+                        <td>{{ item.email }}</td>
+                        <td>{{ item.curso }}</td>
+
+                        <td>
+                            {{ item.fechaInscripcion | date:'dd/MM/yyyy' }}
+                        </td>
+
+                        <td>
+                            {{ obtenerNombreCategoria(item.categoriaAlumno) }}
+                        </td>
+
+                        <td>
+                            {{ item.total | currency }}
+                        </td>
+
+                        <td>
+
+                            <button
+                            class="btn btn-danger btn-sm"
+                            (click)="eliminar(i)">
+                                Eliminar
+                              </button>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- RESUMEN -->
+
+    <div class="card mt-5 shadow p-4 resumen">
+
+        <h3 class="mb-4">
+            Resumen de Inscripciones
+        </h3>
+
+        <p>
+            Estudiantes:
+            <strong>{{ totalEstudiantes() }}</strong>
+        </p>
+
+        <p>
+            Egresados:
+            <strong>{{ totalEgresados() }}</strong>
+        </p>
+
+        <p>
+            Particulares:
+            <strong>{{ totalParticulares() }}</strong>
+        </p>
+
+        <p>
+            Total General:
+            <strong>{{ obtenerInscripciones().length }}</strong>
+        </p>
+
+    </div>
+
+</div>
