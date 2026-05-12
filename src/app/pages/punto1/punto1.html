@@ -1,1 +1,17 @@
-<p>punto1 works!</p>
+<div clas="container">
+  <div class="contenedor-carrusel">
+    <!-- contenido dinamico segun el indice actual -->
+    <div class="diapositiva">
+      <img [src]="diapositivas[indiceActual].imagen" [alt]="diapositivas[indiceActual].titulo" />
+      <div class="texto-diapositiva">
+        <h3>{{ diapositivas[indiceActual].titulo }}</h3>
+        <p>{{ diapositivas[indiceActual].descripcion }}</p>
+      </div>
+    </div>
+    
+    <div class="controles">
+      <button (click)="anterior()">&#10094; Anterior</button>
+      <button (click)="siguiente()">Siguiente &#10095;</button>
+    </div>
+  </div>
+</div>
