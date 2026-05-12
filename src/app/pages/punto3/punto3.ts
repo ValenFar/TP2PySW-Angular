@@ -28,16 +28,16 @@ export class Punto3 {
   
   // Lista de las 6 imágenes distintas para las parejas
   imagenesBase = [
-    'img/punto3/carta1.webp', 
-    'img/punto3/carta2.webp',
-    'img/punto3/carta3.webp',
-    'img/punto3/carta4.webp',
-    'img/punto3/carta5.webp',
-    'img/punto3/carta6.webp'
+    '/img/punto3/carta1.webp', 
+    '/img/punto3/carta2.webp',
+    '/img/punto3/carta3.webp',
+    '/img/punto3/carta4.webp',
+    '/img/punto3/carta5.webp',
+    '/img/punto3/carta6.webp'
   ];
 
   // Imagen neutral para el reverso
-  imagenOculta: string = 'img/punto3/carta_oculta.webp';
+  imagenOculta: string = '/img/punto3/carta_oculta.webp';
 
   constructor() {
     this.generarTablero();
