@@ -1,3 +1,4 @@
+
 .carta-memoria {
     cursor: pointer;
     transition: transform 0.2s ease;
@@ -74,4 +75,5 @@
 /* Un toque de hover para invitar al clic */
 .carta-memoria-container:hover .carta-memoria-inner {
     box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+
 }

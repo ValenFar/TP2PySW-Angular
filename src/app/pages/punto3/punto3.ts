@@ -1,3 +1,4 @@
+
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Importante para usar *ngIf y *ngFor
 
@@ -149,3 +150,4 @@ intentarMatch() {
     }
   }
 }
+
