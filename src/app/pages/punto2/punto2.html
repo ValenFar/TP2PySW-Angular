@@ -1,1 +1,48 @@
-<h1>{{title}}</h1>
+<div id="button_container">
+    <button id="boton_carrito" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#miModal">
+     <i class="bi bi-cart-fill"></i>
+    </button>
+</div>
+    <div class="contenedor_de_cards">
+        <div   class="card-personalizada" *ngFor="let p of mis_productos">
+            <p class="precio-card">Precio: {{p.precio | currency:'USD': 'symbol':'1.0-0'}}</p>
+            <img [src]="p.img" alt="imagen  producto" width="200px">
+            <h3>{{p.nombre}}</h3>
+            <p> {{p.descripcion}}</p>
+            <button class="btn btn-success" (click)="agregarAlCarrito(p)">Añadir al carrito</button>
+        </div>
+        
+         <div class="modal fade" id="miModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Carrito de compras</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul>
+                            <li *ngFor="let itemcarrito of arrayCarrito">
+                               <img [src]="itemcarrito.img" width="30px"> {{itemcarrito.nombre}} - {{itemcarrito.precio | currency:'USD': 'symbol':'1.0-0'}}
+                            </li>
+                        </ul>
+                        <hr>
+                        <strong>Total a abonar: ${{total | currency:'USD': 'symbol':'1.0-0'}} </strong>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+            </div>
+        </div>
+</div>
+
+    <div class="toast-container position-fixed top-50 start-50 translate-middle p-3">
+  <div id="liveToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        ¡Producto agregado con éxito!
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+    </div>
+ 

@@ -1,0 +1,63 @@
+#button_container{
+    display:grid;
+    margin-bottom: 40px;
+}
+.contenedor_de_cards{
+     display:grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 20px;
+    border-radius: 10px;
+    
+    }
+
+.card-personalizada{
+   position: relative; /* Necesario para que el precio se ubique respecto a la card */
+    border: 4px solid black;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra todo el contenido horizontalmente */
+    padding: 40px 15px 15px 15px; /* Más espacio arriba para el precio */
+    background-color: white;
+    height: 100%;  
+    }
+.card-personalizada:hover{
+transform: scale(1.05);
+ }
+
+ .card-personalizada img
+    {
+        width: 300px;
+        height:300px;
+        object-fit: contain;
+        margin-bottom: 20px;
+    }
+
+    .precio-card {
+    position: absolute;  
+    top: 10px;
+    right: 15px;
+    font-weight: bold;
+    color: #28a745; 
+    margin: 0;
+}
+.card-personalizada p {
+    margin-bottom: 10px;
+    flex-grow: 1;  
+}
+
+.card-personalizada button {
+    width: 60%;
+    margin-top: auto; 
+}
+
+#boton_carrito{
+     grid-column: 4;
+    justify-self: end; 
+    width: 60px;
+    height:60px;
+}
+#boton_carrito i{
+    color:white;
+    font-size: 30px;
+}
