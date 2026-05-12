@@ -1,20 +1,9 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>seccion 2</title>
-    <link rel="stylesheet" href="punto3.css">
-</head>
-<body>
-    
-</body>
-</html>
+
 <div class="container mt-5 mb-5">
 
     <div class="card shadow p-4">
 
-        <!-- CAMBIO ELIAS: titulo dinamico -->
+        <!-- titulo dinamico -->
         <h2 class="text-center mb-4">
             {{ modoEdicion ? 'Editar Inscripcion' : 'Inscripción a Cursos' }}
         </h2>
@@ -197,14 +186,14 @@
 
                         <td>
 
-                            <!-- NUEVO ELIAS: boton editar -->
+                            <!--boton editar -->
                             <button
                             class="btn btn-warning btn-sm me-1"
                             (click)="editar(item)">
                                 Editar
                             </button>
 
-                            <!-- CAMBIO ELIAS: eliminar usa item.id en lugar de i -->
+                            <!--eliminar usa item.id en lugar de i -->
                             <button
                             class="btn btn-danger btn-sm"
                             (click)="eliminar(item.id)">
@@ -221,7 +210,7 @@
 
         </div>
 
-        <!-- NUEVO ELIAS: contador de registros -->
+        <!-- contador de registros -->
         <small class="text-muted">
             Mostrando {{ inscripcionesFiltradas.length }} de {{ obtenerInscripciones().length }} registros
         </small>
@@ -257,7 +246,7 @@
             <strong>{{ obtenerInscripciones().length }}</strong>
         </p>
 
-        <!-- NUEVO ELIAS: total recaudado en dinero -->
+        <!--total recaudado en dinero -->
         <p>
             Total Recaudado:
             <strong>{{ totalGeneral() | currency }}</strong>

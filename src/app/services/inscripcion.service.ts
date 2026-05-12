@@ -5,18 +5,33 @@ import { Injectable } from '@angular/core';
 })
 export class InscripcionService {
 
-  inscripciones:any[] = [];
+  private storageKey = 'inscripciones';
 
-  agregarInscripcion(inscripcion:any){
-    this.inscripciones.push(inscripcion);
+  obtenerInscripciones(): any[] {
+    const data = localStorage.getItem(this.storageKey);
+    return data ? JSON.parse(data) : [];
   }
 
-  obtenerInscripciones(){
-    return this.inscripciones;
+  private guardar(lista: any[]): void {
+    localStorage.setItem(this.storageKey, JSON.stringify(lista));
   }
 
-  eliminarInscripcion(index:number){
-    this.inscripciones.splice(index,1);
+  agregarInscripcion(inscripcion: any): void {
+    const lista = this.obtenerInscripciones();
+    inscripcion.id = Date.now();
+    lista.push(inscripcion);
+    this.guardar(lista);
   }
 
+  eliminarInscripcion(id: number): void {
+    const lista = this.obtenerInscripciones().filter((i: any) => i.id !== id);
+    this.guardar(lista);
+  }
+
+  actualizarInscripcion(actualizada: any): void {
+    const lista = this.obtenerInscripciones().map((i: any) =>
+      i.id === actualizada.id ? actualizada : i
+    );
+    this.guardar(lista);
+  }
 }
