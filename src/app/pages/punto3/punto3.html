@@ -1,268 +1,55 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>seccion 2</title>
-    <link rel="stylesheet" href="punto3.css">
-</head>
-<body>
+
+<div class="container my-5 text-center">
+  <h2 class="fw-bold mb-4">Juego de la Memoria</h2>
+
+  <div class="d-flex justify-content-center align-items-center gap-4 mb-4">
+    <h4 class="m-0 text-primary">Intentos Restantes: <strong>{{ intentosRestantes }}</strong></h4>
     
-</body>
-</html>
-<div class="container mt-5 mb-5">
+    @if (!juegoIniciado) {
+      <button class="btn btn-success" (click)="iniciarJuego()">INICIAR</button>
+    }
+    
+    @if (juegoIniciado) {
+      <button class="btn btn-danger" (click)="reiniciarJuego()">REINICIAR</button>
+      
+      <button class="btn btn-warning fw-bold" 
+        [disabled]="cartasSeleccionadas.length !== 2" 
+        (click)="intentarMatch()">
+        INTENTAR
+      </button>
+    }
+  </div>
 
-    <div class="card shadow p-4">
-
-        <!-- CAMBIO ELIAS: titulo dinamico -->
-        <h2 class="text-center mb-4">
-            {{ modoEdicion ? 'Editar Inscripcion' : 'Inscripción a Cursos' }}
-        </h2>
-
-        <!-- DNI -->
-        <div class="mb-3">
-            <label>DNI</label>
-
-            <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="inscripcion.dni"
-            name="dni"
-            required>
-        </div>
-
-        <!-- EMAIL -->
-        <div class="mb-3">
-            <label>Email</label>
-            <input
-            type="email"
-            class="form-control"
-            [(ngModel)]="inscripcion.email"
-            name="email"
-            required>
-        </div>
-
-        <!-- CURSO -->
-        <div class="mb-3">
-            <label>Curso</label>
-
-            <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="inscripcion.curso"
-            name="curso"
-            required>
-        </div>
-
-        <!-- FECHA -->
-        <div class="mb-3">
-            <label>Fecha de inscripción</label>
-            <input
-            type="date"
-            class="form-control"
-            [(ngModel)]="inscripcion.fechaInscripcion"
-            name="fechaInscripcion">
-        </div>
-
-        <!-- PRECIO -->
-        <div class="mb-3">
-            <label>Precio</label>
-
-            <input
-            type="number"
-            class="form-control"
-            [(ngModel)]="inscripcion.precio"
-            name="precio"
-            (change)="calcularTotal()"
-            required>
-        </div>
-
-        <!-- CATEGORIA -->
-        <div class="mb-3">
-
-            <label>Categoría Alumno</label>
-
-            <select
-            class="form-select"
-            [(ngModel)]="inscripcion.categoriaAlumno"
-            name="categoriaAlumno"
-            (change)="calcularTotal()">
-
-                <option value="">
-                    Seleccione
-                </option>
-
-                <option value="1">
-                    Estudiante
-                </option>
-
-                <option value="2">
-                    Egresado
-                </option>
-
-                <option value="3">
-                    Particular
-                </option>
-
-            </select>
-
-        </div>
-
-        <!-- TOTAL -->
-        <div
-        class="alert alert-success"
-        *ngIf="inscripcion.precio > 0 && inscripcion.categoriaAlumno">
-
-            <h4>
-                Total a pagar:
-                {{ totalFinal | currency }}
-            </h4>
-
-        </div>
-
-        <!--boton dinamico + boton cancelar -->
-        <div class="d-flex gap-2">
-
-            <button
-            class="btn btn-primary w-100"
-            (click)="registrar()">
-                {{ modoEdicion ? 'Actualizar' : 'Registrar' }}
-            </button>
-
-            <button
-            class="btn btn-secondary"
-            *ngIf="modoEdicion"
-            (click)="cancelarEdicion()">
-                Cancelar
-            </button>
-
-        </div>
-
+  @if (intentosRestantes === 0) {
+    <div class="alert alert-danger fw-bold">
+      ¡Juego Terminado! Te quedaste sin intentos.
     </div>
+  }
 
+  @if (juegoIniciado && intentosRestantes > 0) {
+    <div class="row g-3 justify-content-center">
+      
+      @for (carta of tablero; track carta.id) {
+        <div class="col-4 col-md-3 col-lg-2">
+          
+          <div class="carta-memoria-container" (click)="seleccionarCarta(carta)">
+            
+            <div class="carta-memoria-inner" [class.volteada]="carta.descubierta || carta.emparejada">
+              
+              <div class="carta-memoria-cara carta-reverso">
+                <img [src]="imagenOculta" alt="Reverso">
+              </div>
+              
+              <div class="carta-memoria-cara carta-frente">
+                <img [src]="carta.imagen" alt="Carta">
+              </div>
 
-    <!-- TABLA -->
-    <div class="card mt-5 shadow p-4">
-
-        <h3 class="mb-4">
-            Lista de Inscripciones
-        </h3>
-
-        <!-- buscador -->
-        <div class="mb-3 d-flex justify-content-end">
-            <input
-            type="text"
-            class="form-control w-auto"
-            [(ngModel)]="busqueda"
-            name="busqueda"
-            placeholder="Buscar...">
-        </div>
-
-        <div class="table-responsive">
-
-            <table class="table table-bordered table-hover">
-
-                <thead class="table-dark">
-                    <tr>
-                        <th>DNI</th>
-                        <th>Email</th>
-                        <th>Curso</th>
-                        <th>Fecha</th>
-                        <th>Categoría</th>
-                        <th>Total</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    <!-- inscripcionesFiltradas en lugar de obtenerInscripciones() -->
-                    <tr *ngFor="let item of inscripcionesFiltradas">
-
-                        <td>{{ item.dni }}</td>
-                        <td>{{ item.email }}</td>
-                        <td>{{ item.curso }}</td>
-
-                        <td>
-                            {{ item.fechaInscripcion | date:'dd/MM/yyyy' }}
-                        </td>
-
-                        <td>
-                            {{ obtenerNombreCategoria(item.categoriaAlumno) }}
-                        </td>
-
-                        <td>
-                            {{ item.total | currency }}
-                        </td>
-
-                        <td>
-
-                            <!-- NUEVO ELIAS: boton editar -->
-                            <button
-                            class="btn btn-warning btn-sm me-1"
-                            (click)="editar(item)">
-                                Editar
-                            </button>
-
-                            <!-- CAMBIO ELIAS: eliminar usa item.id en lugar de i -->
-                            <button
-                            class="btn btn-danger btn-sm"
-                            (click)="eliminar(item.id)">
-                                Eliminar
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
+            </div>
+          </div>
 
         </div>
-
-        <!-- NUEVO ELIAS: contador de registros -->
-        <small class="text-muted">
-            Mostrando {{ inscripcionesFiltradas.length }} de {{ obtenerInscripciones().length }} registros
-        </small>
-
+      }
+      
     </div>
+  }
 
-
-    <!-- RESUMEN -->
-
-    <div class="card mt-5 shadow p-4 resumen">
-
-        <h3 class="mb-4">
-            Resumen de Inscripciones
-        </h3>
-
-        <p>
-            Estudiantes:
-            <strong>{{ totalEstudiantes() }}</strong>
-        </p>
-
-        <p>
-            Egresados:
-            <strong>{{ totalEgresados() }}</strong>
-        </p>
-
-        <p>
-            Particulares:
-            <strong>{{ totalParticulares() }}</strong>
-        </p>
-
-        <p>
-            Total General:
-            <strong>{{ obtenerInscripciones().length }}</strong>
-        </p>
-
-        <!-- NUEVO ELIAS: total recaudado en dinero -->
-        <p>
-            Total Recaudado:
-            <strong>{{ totalGeneral() | currency }}</strong>
-        </p>
-
-    </div>
-
-</div>
